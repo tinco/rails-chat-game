@@ -13,13 +13,11 @@
 
 ActiveRecord::Schema.define(version: 20160207000506) do
 
-  create_table "entities", id: false, force: :cascade do |t|
-    t.string   "id"
+  create_table "entities", force: :cascade do |t|
     t.text     "components"
     t.text     "values"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["id"], name: "index_entities_on_id", unique: true
   end
 
 end

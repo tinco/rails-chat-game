@@ -1,3 +1,9 @@
+PATH
+  remote: ../entity_components
+  specs:
+    entity_components (0.1.0)
+      activesupport (>= 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -150,6 +156,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  entity_components!
   jbuilder (~> 2.0)
   jquery-rails
   puma
