@@ -1,3 +1,6 @@
 class Entity < ApplicationRecord
-  include EntityComponents
+  include NoBrainer::Document
+  include NoBrainer::Document::Timestamps
+
+  include EntityComponents::NoBrainer
 end
