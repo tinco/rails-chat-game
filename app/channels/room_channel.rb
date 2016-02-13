@@ -1,12 +1,12 @@
 # Be sure to restart your server when you modify this file. Action Cable runs in an EventMachine loop that does not support auto reloading.
-class RoomChannel < ApplicationCable::Channel
-  def subscribed
-    defer_subscription_confirmation!
+require 'nobrainer_streams'
 
-    Concurrent.global_io_executor.post do
-      Room.first.messages.raw.changes.each do |changes|
-        transmit render_message(changes["new_val"]), via: "streamed from room_channel"
-      end
+class RoomChannel < ApplicationCable::Channel
+  include NoBrainer::Streams
+
+  def subscribed
+    stream_from Room.first.messages, {}, -> (changes) do
+      transmit message: render_message(changes['new_val'])
     end
   end
 
@@ -17,6 +17,8 @@ class RoomChannel < ApplicationCable::Channel
   def speak(data)
     Message.create(user: User.first, room: Room.first, text: data['message'])
   end
+
+  private
 
   def render_message(message)
     message = Message.new(message)
