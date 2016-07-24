@@ -1,11 +1,9 @@
-# Be sure to restart your server when you modify this file. Action Cable runs in an EventMachine loop that does not support auto reloading.
-require 'nobrainer_streams'
-
 class RoomChannel < ApplicationCable::Channel
   include NoBrainer::Streams
 
   def subscribed
-    stream_from Room.first.messages, {}, -> (changes) do
+    first_room = Room.first || Room.create(name: 'First Room')
+    stream_from first_room.messages, {}, -> (changes) do
       transmit message: render_message(changes['new_val'])
     end
   end
